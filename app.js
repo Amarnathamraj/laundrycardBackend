@@ -13,9 +13,10 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files from the 'public' directory
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
+//app.use('/images', express.static(path.join(__dirname, 'public/images')));
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/laundry', {
+// mongoose.connect('mongodb+srv://Amarnath:Amarnath@cluster0.6tnzv4s.mongodb.net/college?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://Amarnath:Amarnath@cluster0.6tnzv4s.mongodb.net/laundry?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -28,12 +29,12 @@ const Order = require('./model/order');
 const loginRoutes = require('./routes/login');
 
 // Routes
-app.use('/api/v1', loginRoutes);
+app.use('/', loginRoutes);
 
 //app.use('/api', ProductRoutes);
 
 // POST a new order
-app.post('/api/orders', async (req, res) => {
+app.post('/orders', async (req, res) => {
   try {
     const orderData = req.body;
     console.log('Received order data:', orderData); // Log incoming data for debugging
@@ -57,7 +58,8 @@ app.post('/api/orders', async (req, res) => {
 });
 
 // GET all orders for a specific user
-app.get('/api/orders', async (req, res) => {
+// https://laundrycardbackend-production.up.railway.app/orders'
+app.get('/orders', async (req, res) => {
   try {
     const { userId } = req.query;
     if (!userId) {
@@ -72,7 +74,7 @@ app.get('/api/orders', async (req, res) => {
 });
 
 // UPDATE order status (for cancellation)
-app.put('/api/orders/:orderId', async (req, res) => {
+app.put('/orders/:orderId', async (req, res) => {
   try {
     const { orderId } = req.params;
     const { status } = req.body;
