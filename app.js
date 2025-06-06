@@ -3,16 +3,17 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path')
+// const path = require('path')
+const auth = require('./middleware/authMiddleware'); 
 
 const app = express();
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the 'public' directory
+
 //app.use('/images', express.static(path.join(__dirname, 'public/images')));
 // MongoDB connection
 // mongoose.connect('mongodb+srv://Amarnath:Amarnath@cluster0.6tnzv4s.mongodb.net/college?retryWrites=true&w=majority&appName=Cluster0')
@@ -33,14 +34,14 @@ app.use('/', loginRoutes);
 
 //app.use('/api', ProductRoutes);
 
-// POST a new order
+// POst  new order
 app.post('/orders', async (req, res) => {
   try {
     const orderData = req.body;
     console.log('Received order data:', orderData); // Log incoming data for debugging
 
-    // Validate required fields
-    const requiredFields = ['orderId', 'userId', 'orderDateTime', 'storeLocation', 'city', 'storePhone', 'totalItems', 'price', 'items'];
+    
+    const requiredFields = ['orderId', 'userId', 'orderDateTime', 'storeLocation', 'city', 'storePhone', 'totalItems', 'price','customerAddress', 'items'];
     for (const field of requiredFields) {
       if (!orderData[field]) {
         return res.status(400).json({ message: `Missing required field: ${field}` });
@@ -57,7 +58,13 @@ app.post('/orders', async (req, res) => {
   }
 });
 
-// GET all orders for a specific user
+
+
+
+
+
+
+// GEting all orders for a specific user
 // https://laundrycardbackend-production.up.railway.app/orders'
 app.get('/orders', async (req, res) => {
   try {
@@ -73,7 +80,9 @@ app.get('/orders', async (req, res) => {
   }
 });
 
-// UPDATE order status (for cancellation)
+
+
+// UPDATE order status cancelling order
 app.put('/orders/:orderId', async (req, res) => {
   try {
     const { orderId } = req.params;
@@ -93,8 +102,8 @@ app.put('/orders/:orderId', async (req, res) => {
   }
 });
 
-// Start server
-const PORT = process.env.PORT || 5000;  // Use Railway's port or fallback to 5000 locally
+
+const PORT = process.env.PORT || 5000;  
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

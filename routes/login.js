@@ -103,7 +103,7 @@ router.post('/login',
                 } else {
                     res.status(401).json({
                         status: 'failed',
-                        message: 'Invalid credentials'
+                        message: 'user not registered'
                     });
                 }
             });

@@ -10,6 +10,7 @@ const orderSchema = new mongoose.Schema({
   totalItems: { type: Number, required: true },
   price: { type: Number, required: true },
   status: { type: String, required: true, default: 'Pending' },
+  customerAddress: { type: String, required: true },
   items: [{
     name: { type: String, required: true },
     quantity: { type: Number, required: true },
