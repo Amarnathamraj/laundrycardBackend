@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 // const path = require('path')
-const auth = require('./middleware/authMiddleware'); 
+//const auth = require('./middleware/authMiddleware'); 
 
 const app = express();
 
